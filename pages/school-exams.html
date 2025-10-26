@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Exams - Bofexo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #fdbb2d;
+            text-decoration: none;
+        }
+
+        .breadcrumb span {
+            color: white;
+        }
+
+        .classes-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+        }
+
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Glass Morphism Class Cards */
+        .class-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Different gradient backgrounds for cards */
+        .class-card:nth-child(1) { background: linear-gradient(135deg, rgba(26, 42, 108, 0.8), rgba(178, 31, 31, 0.8)); }
+        .class-card:nth-child(2) { background: linear-gradient(135deg, rgba(178, 31, 31, 0.8), rgba(253, 187, 45, 0.8)); }
+        .class-card:nth-child(3) { background: linear-gradient(135deg, rgba(253, 187, 45, 0.8), rgba(26, 42, 108, 0.8)); }
+        .class-card:nth-child(4) { background: linear-gradient(135deg, rgba(26, 42, 108, 0.8), rgba(178, 31, 31, 0.8)); }
+        .class-card:nth-child(5) { background: linear-gradient(135deg, rgba(178, 31, 31, 0.8), rgba(253, 187, 45, 0.8)); }
+        .class-card:nth-child(6) { background: linear-gradient(135deg, rgba(253, 187, 45, 0.8), rgba(26, 42, 108, 0.8)); }
+        .class-card:nth-child(7) { background: linear-gradient(135deg, rgba(26, 42, 108, 0.8), rgba(178, 31, 31, 0.8)); }
+        .class-card:nth-child(8) { background: linear-gradient(135deg, rgba(178, 31, 31, 0.8), rgba(253, 187, 45, 0.8)); }
+        .class-card:nth-child(9) { background: linear-gradient(135deg, rgba(253, 187, 45, 0.8), rgba(26, 42, 108, 0.8)); }
+        .class-card:nth-child(10) { background: linear-gradient(135deg, rgba(26, 42, 108, 0.8), rgba(178, 31, 31, 0.8)); }
+        .class-card:nth-child(11) { background: linear-gradient(135deg, rgba(178, 31, 31, 0.8), rgba(253, 187, 45, 0.8)); }
+        .class-card:nth-child(12) { background: linear-gradient(135deg, rgba(253, 187, 45, 0.8), rgba(26, 42, 108, 0.8)); }
+
+        .class-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .class-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .class-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* 3D Press Effect */
+        .class-card:active {
+            transform: translateY(-5px) scale(0.98);
+            transition: transform 0.1s ease;
+        }
+
+        .class-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .class-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .class-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .class-card {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Stagger the floating animation */
+        .class-card:nth-child(2) { animation-delay: 0.5s; }
+        .class-card:nth-child(3) { animation-delay: 1s; }
+        .class-card:nth-child(4) { animation-delay: 1.5s; }
+        .class-card:nth-child(5) { animation-delay: 2s; }
+        .class-card:nth-child(6) { animation-delay: 2.5s; }
+        .class-card:nth-child(7) { animation-delay: 3s; }
+        .class-card:nth-child(8) { animation-delay: 3.5s; }
+        .class-card:nth-child(9) { animation-delay: 4s; }
+        .class-card:nth-child(10) { animation-delay: 4.5s; }
+        .class-card:nth-child(11) { animation-delay: 5s; }
+        .class-card:nth-child(12) { animation-delay: 5.5s; }
+
+        /* Ripple click effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .classes-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .class-card {
+                padding: 2rem 1.5rem;
+                min-height: 180px;
+            }
+            
+            .class-title {
+                font-size: 1.8rem;
+            }
+            
+            .class-icon {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .classes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-top">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Bofexo</span>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search exams, categories..." id="searchInput">
+                <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="header-actions">
+                <button class="auth-btn" onclick="toggleAuthModal()">
+                    <i class="fas fa-user"></i>
+                    Login
+                </button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="school-exams.html" class="active"><i class="fas fa-school"></i> School Exams</a></li>
+                <li><a href="class-10th-exams.html"><i class="fas fa-graduation-cap"></i> Class 10th</a></li>
+                <li><a href="select-publication.html"><i class="fas fa-book"></i> Publications</a></li>
+                <li><a href="arihant-question-bank.html"><i class="fas fa-file-alt"></i> Arihant QB</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Select Your School Exams</h1>
+        <p class="page-subtitle">Choose your class to access study materials, question banks, and exam resources</p>
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> >
+            <span>School Exams</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="classes-container">
+        <div class="classes-grid">
+            <!-- Class 12 -->
+            <a class="class-card" href="class-12th-exams.html" id="class12">
+                <i class="fas fa-university class-icon"></i>
+                <div class="class-title">Class 12th</div>
+                <div class="class-subtitle">Board Exams & Competitive</div>
+            </a>
+
+            <!-- Class 10 -->
+            <a class="class-card" href="class-10th-exams.html" id="class10">
+                <i class="fas fa-graduation-cap class-icon"></i>
+                <div class="class-title">Class 10</div>
+                <div class="class-subtitle">Board Preparation</div>
+            </a>
+
+            <!-- Class 11 -->
+            <a class="class-card" href="class-11th-exams.html" id="class11">
+                <i class="fas fa-book class-icon"></i>
+                <div class="class-title">Class 11</div>
+                <div class="class-subtitle">Foundation Building</div>
+            </a>
+
+            <!-- Class 9 -->
+            <a class="class-card" href="class-9th-exams.html" id="class9">
+                <i class="fas fa-pencil-alt class-icon"></i>
+                <div class="class-title">Class 09</div>
+                <div class="class-subtitle">Concept Learning</div>
+            </a>
+
+            <!-- Class 8 -->
+            <a class="class-card" href="class-8th-exams.html" id="class8">
+                <i class="fas fa-calculator class-icon"></i>
+                <div class="class-title">Class 08</div>
+                <div class="class-subtitle">Advanced Topics</div>
+            </a>
+
+            <!-- Class 7 -->
+            <a class="class-card" href="class-7th-exams.html" id="class7">
+                <i class="fas fa-flask class-icon"></i>
+                <div class="class-title">Class 07</div>
+                <div class="class-subtitle">Science & Math</div>
+            </a>
+
+            <!-- Class 6 -->
+            <a class="class-card" href="class-6th-exams.html" id="class6">
+                <i class="fas fa-globe class-icon"></i>
+                <div class="class-title">Class 06</div>
+                <div class="class-subtitle">Social Studies</div>
+            </a>
+
+            <!-- Class 5 -->
+            <a class="class-card" href="class-5th-exams.html" id="class5">
+                <i class="fas fa-shapes class-icon"></i>
+                <div class="class-title">Class 05</div>
+                <div class="class-subtitle">Basic Concepts</div>
+            </a>
+
+            <!-- Class 4 -->
+            <a class="class-card" href="class-4th-exams.html" id="class4">
+                <i class="fas fa-palette class-icon"></i>
+                <div class="class-title">Class 04</div>
+                <div class="class-subtitle">Creative Learning</div>
+            </a>
+
+            <!-- Class 3 -->
+            <a class="class-card" href="class-3rd-exams.html" id="class3">
+                <i class="fas fa-star class-icon"></i>
+                <div class="class-title">Class 03</div>
+                <div class="class-subtitle">Fun Activities</div>
+            </a>
+
+            <!-- Class 2 -->
+            <a class="class-card" href="class-2nd-exams.html" id="class2">
+                <i class="fas fa-apple-alt class-icon"></i>
+                <div class="class-title">Class 02</div>
+                <div class="class-subtitle">Early Education</div>
+            </a>
+
+            <!-- Class 1 -->
+            <a class="class-card" href="class-1st-exams.html" id="class1">
+                <i class="fas fa-child class-icon"></i>
+                <div class="class-title">Class 01</div>
+                <div class="class-subtitle">Beginner Level</div>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Bofexo</h3>
+                <p>Your ultimate career guidance platform for competitive exams and professional growth.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>School Categories</h4>
+                <ul>
+                    <li><a href="class-10th-exams.html">Class 10th</a></li>
+                    <li><a href="class-12th-exams.html">Class 12th</a></li>
+                    <li><a href="class-9th-exams.html">Class 9th</a></li>
+                    <li><a href="class-11th-exams.html">Class 11th</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p><i class="fas fa-envelope"></i> info@bofexo.com</p>
+                <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+                <p><i class="fas fa-map-marker-alt"></i> New Delhi, India</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Bofexo. All Rights Reserved. | Designed with <i class="fas fa-heart"></i></p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // Ripple click effect
+        document.querySelectorAll('.class-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Create ripple element
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                
+                // Position the ripple
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                
+                this.appendChild(ripple);
+                
+                // Remove ripple after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm.trim()) {
+                alert('Searching for: ' + searchTerm);
+                // Implement actual search functionality
+            }
+        }
+
+        // Add hover sound effect (optional)
+        document.querySelectorAll('.class-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                // You could add a subtle sound effect here
+                // For example: new Audio('hover-sound.mp3').play();
+            });
+        });
+
+        // Add page load animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.class-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

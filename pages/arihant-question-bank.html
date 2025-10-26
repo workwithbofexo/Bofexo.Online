@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arihant Question Bank - Bofexo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #fdbb2d;
+            text-decoration: none;
+        }
+
+        .breadcrumb span {
+            color: white;
+        }
+
+        .books-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+        }
+
+        .books-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .books-table {
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .books-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .books-table th {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            color: white;
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .books-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .books-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .books-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .book-name {
+            font-weight: 600;
+            color: #1a2a6c;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-download {
+            background: #1a2a6c;
+            color: white;
+        }
+
+        .btn-amazon {
+            background: #fdbb2d;
+            color: #1a2a6c;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .serial-number {
+            text-align: center;
+            font-weight: bold;
+            color: #b21f1f;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 4px solid #fdbb2d;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #1a2a6c;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #1a2a6c;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .books-table {
+                overflow-x: auto;
+                display: block;
+            }
+            
+            .books-table table {
+                min-width: 600px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-top">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Bofexo</span>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search exams, categories..." id="searchInput">
+                <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="header-actions">
+                <button class="auth-btn" onclick="toggleAuthModal()">
+                    <i class="fas fa-user"></i>
+                    Login
+                </button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="school-exams.html"><i class="fas fa-school"></i> School Exams</a></li>
+                <li><a href="class-10th-exams.html"><i class="fas fa-graduation-cap"></i> Class 10th</a></li>
+                <li><a href="select-publication.html"><i class="fas fa-book"></i> Publications</a></li>
+                <li><a href="arihant-question-bank.html" class="active"><i class="fas fa-file-alt"></i> Arihant QB</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Arihant Question Bank</h1>
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> >
+            <a href="school-exams.html">School Exams</a> >
+            <a href="class-10th-exams.html">Class 10th</a> >
+            <a href="select-publication.html">Publications</a> >
+            <span>Arihant Question Bank</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="books-container">
+        <div class="books-intro">
+            <h2>Class 10 Arihant Question Banks</h2>
+            <p>Complete collection of Arihant Question Banks for CBSE Class 10. Download PDFs or purchase physical copies from Amazon. All books are latest edition for 2024-25 academic session.</p>
+        </div>
+
+        <div class="books-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="10%">Serial Number</th>
+                        <th width="40%">Book Name</th>
+                        <th width="25%">PDF Download</th>
+                        <th width="25%">Amazon</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="serial-number">1.</td>
+                        <td class="book-name">Arihant Hindi</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-download" onclick="downloadBook('Arihant Hindi')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-amazon" onclick="buyOnAmazon('Arihant Hindi')">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="serial-number">2.</td>
+                        <td class="book-name">Arihant English</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-download" onclick="downloadBook('Arihant English')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-amazon" onclick="buyOnAmazon('Arihant English')">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="serial-number">3.</td>
+                        <td class="book-name">Arihant Mathematics</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-download" onclick="downloadBook('Arihant Mathematics')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-amazon" onclick="buyOnAmazon('Arihant Mathematics')">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="serial-number">4.</td>
+                        <td class="book-name">Arihant Science</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-download" onclick="downloadBook('Arihant Science')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-amazon" onclick="buyOnAmazon('Arihant Science')">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="serial-number">5.</td>
+                        <td class="book-name">Arihant Social Science</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-download" onclick="downloadBook('Arihant Social Science')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-amazon" onclick="buyOnAmazon('Arihant Social Science')">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="serial-number">6.</td>
+                        <td class="book-name">Arihant Sanskrit</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-download" onclick="downloadBook('Arihant Sanskrit')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-amazon" onclick="buyOnAmazon('Arihant Sanskrit')">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="serial-number">7.</td>
+                        <td class="book-name">Arihant Computer Applications</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-download" onclick="downloadBook('Arihant Computer Applications')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-amazon" onclick="buyOnAmazon('Arihant Computer Applications')">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="serial-number">8.</td>
+                        <td class="book-name">Arihant Physical Education</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-download" onclick="downloadBook('Arihant Physical Education')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-amazon" onclick="buyOnAmazon('Arihant Physical Education')">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="serial-number">9.</td>
+                        <td class="book-name">Arihant Art & Drawing</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-download" onclick="downloadBook('Arihant Art & Drawing')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-amazon" onclick="buyOnAmazon('Arihant Art & Drawing')">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="serial-number">10.</td>
+                        <td class="book-name">Arihant All in One</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-download" onclick="downloadBook('Arihant All in One')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-amazon" onclick="buyOnAmazon('Arihant All in One')">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h3>High Quality PDFs</h3>
+                <p>All question banks are available in high-resolution PDF format with clear text and diagrams.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Latest Syllabus</h3>
+                <p>Updated according to the latest CBSE syllabus and examination pattern for 2024-25.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Expert Solutions</h3>
+                <p>Detailed step-by-step solutions prepared by subject matter experts.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Mobile Friendly</h3>
+                <p>PDFs are optimized for viewing on smartphones, tablets, and computers.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Bofexo</h3>
+                <p>Your ultimate career guidance platform for competitive exams and professional growth.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="school-exams.html">School Exams</a></li>
+                    <li><a href="engineering.html">Engineering</a></li>

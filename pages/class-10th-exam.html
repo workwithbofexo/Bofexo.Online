@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 10th Exams - Bofexo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #fdbb2d;
+            text-decoration: none;
+        }
+
+        .breadcrumb span {
+            color: white;
+        }
+
+        .materials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem;
+        }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Glass Morphism Material Cards */
+        .material-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Different gradient backgrounds for cards */
+        .material-card:nth-child(1) { background: linear-gradient(135deg, rgba(26, 42, 108, 0.8), rgba(178, 31, 31, 0.8)); }
+        .material-card:nth-child(2) { background: linear-gradient(135deg, rgba(178, 31, 31, 0.8), rgba(253, 187, 45, 0.8)); }
+        .material-card:nth-child(3) { background: linear-gradient(135deg, rgba(253, 187, 45, 0.8), rgba(26, 42, 108, 0.8)); }
+        .material-card:nth-child(4) { background: linear-gradient(135deg, rgba(26, 42, 108, 0.8), rgba(178, 31, 31, 0.8)); }
+        .material-card:nth-child(5) { background: linear-gradient(135deg, rgba(178, 31, 31, 0.8), rgba(253, 187, 45, 0.8)); }
+        .material-card:nth-child(6) { background: linear-gradient(135deg, rgba(253, 187, 45, 0.8), rgba(26, 42, 108, 0.8)); }
+        .material-card:nth-child(7) { background: linear-gradient(135deg, rgba(26, 42, 108, 0.8), rgba(178, 31, 31, 0.8)); }
+        .material-card:nth-child(8) { background: linear-gradient(135deg, rgba(178, 31, 31, 0.8), rgba(253, 187, 45, 0.8)); }
+        .material-card:nth-child(9) { background: linear-gradient(135deg, rgba(253, 187, 45, 0.8), rgba(26, 42, 108, 0.8)); }
+        .material-card:nth-child(10) { background: linear-gradient(135deg, rgba(26, 42, 108, 0.8), rgba(178, 31, 31, 0.8)); }
+        .material-card:nth-child(11) { background: linear-gradient(135deg, rgba(178, 31, 31, 0.8), rgba(253, 187, 45, 0.8)); }
+        .material-card:nth-child(12) { background: linear-gradient(135deg, rgba(253, 187, 45, 0.8), rgba(26, 42, 108, 0.8)); }
+
+        .material-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .material-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .material-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* 3D Press Effect */
+        .material-card:active {
+            transform: translateY(-5px) scale(0.98);
+            transition: transform 0.1s ease;
+        }
+
+        .material-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .material-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .material-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .material-card {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Stagger the floating animation */
+        .material-card:nth-child(2) { animation-delay: 0.5s; }
+        .material-card:nth-child(3) { animation-delay: 1s; }
+        .material-card:nth-child(4) { animation-delay: 1.5s; }
+        .material-card:nth-child(5) { animation-delay: 2s; }
+        .material-card:nth-child(6) { animation-delay: 2.5s; }
+        .material-card:nth-child(7) { animation-delay: 3s; }
+        .material-card:nth-child(8) { animation-delay: 3.5s; }
+        .material-card:nth-child(9) { animation-delay: 4s; }
+        .material-card:nth-child(10) { animation-delay: 4.5s; }
+        .material-card:nth-child(11) { animation-delay: 5s; }
+        .material-card:nth-child(12) { animation-delay: 5.5s; }
+
+        /* Ripple click effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Quick Stats */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #fdbb2d;
+        }
+
+        .stat-label {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* Exam Tips Section */
+        .tips-section {
+            background: rgb(245, 4, 4);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tips-section h2 {
+            color: #fdbb2d;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tip-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #fdbb2d;
+        }
+
+        .tip-item h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-item p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .materials-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .material-card {
+                padding: 2rem 1.5rem;
+                min-height: 180px;
+            }
+            
+            .material-title {
+                font-size: 1.3rem;
+            }
+            
+            .material-icon {
+                font-size: 2.5rem;
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .materials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-top">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Bofexo</span>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search study materials..." id="searchInput">
+                <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="header-actions">
+                <button class="auth-btn" onclick="toggleAuthModal()">
+                    <i class="fas fa-user"></i>
+                    Login
+                </button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="school-exams.html"><i class="fas fa-school"></i> School Exams</a></li>
+                <li><a href="class-10th-exams.html" class="active"><i class="fas fa-graduation-cap"></i> Class 10th</a></li>
+                <li><a href="select-publication.html"><i class="fas fa-book"></i> Publications</a></li>
+                <li><a href="arihant-question-bank.html"><i class="fas fa-file-alt"></i> Arihant QB</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">Class 10th Study Materials</h1>
+        <p class="page-subtitle">Access complete study resources for CBSE Class 10 Board Exams</p>
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> >
+            <a href="school-exams.html">School Exams</a> >
+            <span>Class 10th</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="materials-container">
+        <!-- Quick Stats -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Study Materials</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Access Available</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Video Lectures</div>
+            </div>
+        </div>
+
+        <div class="materials-grid">
+            <!-- NCERT Books -->
+            <a class="material-card" href="ncert-books-10.html" id="ncertBooks">
+                <i class="fas fa-book material-icon"></i>
+                <div class="material-title">NCERT Books</div>
+                <div class="material-subtitle">Official Textbooks</div>
+            </a>
+
+            <!-- Reference Books -->
+            <a class="material-card" href="reference-books-10.html" id="referenceBooks">
+                <i class="fas fa-book-open material-icon"></i>
+                <div class="material-title">Reference Books</div>
+                <div class="material-subtitle">Additional Reading</div>
+            </a>
+
+            <!-- Question Banks -->
+            <a class="material-card" href="question-banks-10.html" id="questionBanks">
+                <i class="fas fa-file-alt material-icon"></i>
+                <div class="material-title">Question Banks</div>
+                <div class="material-subtitle">Practice Questions</div>
+            </a>
+
+            <!-- Guides -->
+            <a class="material-card" href="guides-10.html" id="guides">
+                <i class="fas fa-compass material-icon"></i>
+                <div class="material-title">Study Guides</div>
+                <div class="material-subtitle">Complete Solutions</div>
+            </a>
+
+            <!-- Notes -->
+            <a class="material-card" href="notes-10.html" id="notes">
+                <i class="fas fa-sticky-note material-icon"></i>
+                <div class="material-title">Revision Notes</div>
+                <div class="material-subtitle">Quick Revision</div>
+            </a>
+
+            <!-- Sample Papers -->
+            <a class="material-card" href="sample-papers-10.html" id="samplePapers">
+                <i class="fas fa-copy material-icon"></i>
+                <div class="material-title">Sample Papers</div>
+                <div class="material-subtitle">Practice Tests</div>
+            </a>
+
+            <!-- Previous Year Papers -->
+            <a class="material-card" href="previous-papers-10.html" id="previousPapers">
+                <i class="fas fa-history material-icon"></i>
+                <div class="material-title">Previous Year Papers</div>
+                <div class="material-subtitle">Past Exams</div>
+            </a>
+
+            <!-- Solutions -->
+            <a class="material-card" href="solutions-10.html" id="solutions">
+                <i class="fas fa-check-circle material-icon"></i>
+                <div class="material-title">Solutions</div>
+                <div class="material-subtitle">Step-by-Step</div>
+            </a>
+
+            <!-- Mind Maps -->
+            <a class="material-card" href="mind-maps-10.html" id="mindMaps">
+                <i class="fas fa-project-diagram material-icon"></i>
+                <div class="material-title">Mind Maps</div>
+                <div class="material-subtitle">Visual Learning</div>
+            </a>
+
+            <!-- Formula Sheets -->
+            <a class="material-card" href="formula-sheets-10.html" id="formulaSheets">
+                <i class="fas fa-square-root-alt material-icon"></i>
+                <div class="material-title">Formula Sheets</div>
+                <div class="material-subtitle">Important Formulas</div>
+            </a>
+
+            <!-- Video Lectures -->
+            <a class="material-card" href="video-lectures-10.html" id="videoLectures">
+                <i class="fas fa-video material-icon"></i>
+                <div class="material-title">Video Lectures</div>
+                <div class="material-subtitle">Visual Learning</div>
+            </a>
+
+            <!-- Mock Tests -->
+            <a class="material-card" href="mock-tests-10.html" id="mockTests">
+                <i class="fas fa-clock material-icon"></i>
+                <div class="material-title">Mock Tests</div>
+                <div class="material-subtitle">Timed Practice</div>
+            </a>
+        </div>
+
+        <!-- Exam Tips Section -->
+        <div class="tips-section">
+            <h2><i class="fas fa-lightbulb"></i> Class 10 Board Exam Tips</h2>
+            <div class="tips-grid">
+                <div class="tip-item">
+                    <h4>Time Management</h4>
+                    <p>Create a study schedule with dedicated time for each subject and regular breaks.</p>
+                </div>
+                <div class="tip-item">
+                    <h4>NCERT First</h4>
+                    <p>Master NCERT textbooks thoroughly before moving to reference books.</p>
+                </div>
+                <div class="tip-item">
+                    <h4>Practice Writing</h4>
+                    <p>Regularly practice answer writing to improve speed and presentation.</p>
+                </div>
+                <div class="tip-item">
+                    <h4>Revision is Key</h4>
+                    <p>Revise regularly - weekly and monthly revisions help in better retention.</p>
+                </div>
+                <div class="tip-item">
+                    <h4>Solve Sample Papers</h4>
+                    <p>Practice with previous year papers and sample papers under exam conditions.</p>
+                </div>
+                <div class="tip-item">
+                    <h4>Health Matters</h4>
+                    <p>Maintain proper sleep, nutrition, and exercise during preparation.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Bofexo</h3>
+                <p>Your ultimate career guidance platform for competitive exams and professional growth.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Study Materials</h4>
+                <ul>
+                    <li><a href="ncert-books-10.html">NCERT Books</a></li>
+                    <li><a href="sample-papers-10.html">Sample Papers</a></li>
+                    <li><a href="question-banks-10.html">Question Banks</a></li>
+                    <li><a href="notes-10.html">Revision Notes</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p><i class="fas fa-envelope"></i> info@bofexo.com</p>
+                <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+                <p><i class="fas fa-map-marker-alt"></i> New Delhi, India</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Bofexo. All Rights Reserved. | Designed with <i class="fas fa-heart"></i></p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // Ripple click effect
+        document.querySelectorAll('.material-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Create ripple element
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                
+                // Position the ripple
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                
+                this.appendChild(ripple);
+                
+                // Remove ripple after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm.trim()) {
+                alert('Searching study materials for: ' + searchTerm);
+                // Implement actual search functionality
+            }
+        }
+
+        // Add page load animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.material-card');
+            const stats = document.querySelectorAll('.stat-card');
+            const tips = document.querySelectorAll('.tip-item');
+            
+            // Animate material cards
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+
+            // Animate stat cards
+            stats.forEach((stat, index) => {
+                stat.style.opacity = '0';
+                stat.style.transform = 'scale(0.8)';
+                
+                setTimeout(() => {
+                    stat.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    stat.style.opacity = '1';
+                    stat.style.transform = 'scale(1)';
+                }, 500 + index * 200);
+            });
+
+            // Animate tip items
+            tips.forEach((tip, index) => {
+                tip.style.opacity = '0';
+                tip.style.transform = 'translateX(-20px)';
+                
+                setTimeout(() => {
+                    tip.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    tip.style.opacity = '1';
+                    tip.style.transform = 'translateX(0)';
+                }, 1000 + index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
